@@ -1,0 +1,2 @@
+# MCHosting
+Minecraft Hosting Service
