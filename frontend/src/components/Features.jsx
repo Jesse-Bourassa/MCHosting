@@ -22,13 +22,12 @@ export default function Features() {
       }}
     >
       <Container maxWidth="lg">
-        <Typography variant="h4" align="center" gutterBottom>
+        <Typography variant="h3" align="center" gutterBottom>
           Features
         </Typography>
-        <Typography variant="subtitle1" align="center" paragraph>
+        <Typography variant="h6" align="center" paragraph>
           Everything you need to build an epic Minecraft server.
         </Typography>
-
         <Grid container spacing={4} sx={{ mt: 4 }}>
           {/* Easy Setup */}
           <Grid item xs={12} sm={4}>
@@ -39,16 +38,17 @@ export default function Features() {
                 flexDirection: 'column',
                 textAlign: 'center',
                 alignItems: 'center',
+                boxShadow: 3,
                 p: 2,
                 transition: 'transform 0.3s, box-shadow 0.3s',
                 '&:hover': {
                   transform: 'translateY(-4px)',
-                  boxShadow: 3
+                  boxShadow: 7
                 }
               }}
             >
               <CardContent>
-                <RocketLaunchIcon sx={{ fontSize: 48, mb: 2 }} />
+                <RocketLaunchIcon sx={{ fontSize: 48, mb: 2, color: 'secondary.main' }} />
                 <Typography variant="h5" gutterBottom>
                   Easy Setup
                 </Typography>
@@ -59,7 +59,6 @@ export default function Features() {
               </CardContent>
             </Card>
           </Grid>
-
           {/* Scalable Performance */}
           <Grid item xs={12} sm={4}>
             <Card
@@ -69,16 +68,17 @@ export default function Features() {
                 flexDirection: 'column',
                 textAlign: 'center',
                 alignItems: 'center',
+                boxShadow: 3,
                 p: 2,
                 transition: 'transform 0.3s, box-shadow 0.3s',
                 '&:hover': {
                   transform: 'translateY(-4px)',
-                  boxShadow: 3
+                  boxShadow: 7
                 }
               }}
             >
               <CardContent>
-                <BarChartIcon sx={{ fontSize: 48, mb: 2 }} />
+                <BarChartIcon sx={{ fontSize: 48, mb: 2, color: 'secondary.main' }} />
                 <Typography variant="h5" gutterBottom>
                   Scalable Performance
                 </Typography>
@@ -99,16 +99,17 @@ export default function Features() {
                 flexDirection: 'column',
                 textAlign: 'center',
                 alignItems: 'center',
+                boxShadow: 3,
                 p: 2,
                 transition: 'transform 0.3s, box-shadow 0.3s',
                 '&:hover': {
                   transform: 'translateY(-4px)',
-                  boxShadow: 3
+                  boxShadow: 7
                 }
               }}
             >
               <CardContent>
-                <HeadsetMicIcon sx={{ fontSize: 48, mb: 2 }} />
+                <HeadsetMicIcon sx={{ fontSize: 48, mb: 2, color: 'secondary.main'}} />
                 <Typography variant="h5" gutterBottom>
                   24/7 Support
                 </Typography>

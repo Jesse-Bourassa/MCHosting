@@ -1,41 +1,25 @@
 // frontend/src/pages/Home.jsx
 
 import React from 'react';
-import { Box, Container, Typography, Button } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 import NavBar from '../components/NavBar';
 import Features from '../components/Features';
 import Pricing from '../components/Pricing';
+import GlassHero from '../components/Hero';
+import HowItWorks from '../components/HowItWorks';
+import CustomDivider from '../components/CustomDivider';
+
+
 
 export default function Home() {
   return (
     <>
       <NavBar />
-
-      {/* Hero Section */}
-      <Box
-        sx={{
-            py: 8,
-            textAlign: 'center',
-            backgroundColor: 'primary.main',  // Use the theme's primary color
-            color: 'text.primary',            // Ensures text is readable
-          }}
-      >
-        <Container maxWidth="md">
-          <Typography variant="h3" gutterBottom>
-            Welcome to My Minecraft Hosting Service
-          </Typography>
-          <Typography variant="h6" paragraph>
-            Experience reliable, scalable, and affordable Minecraft server hosting
-            tailored to your needs.
-          </Typography>
-          <Button variant="contained" color="secondary" size="large" sx={{ mt: 2 }}>
-            Get Started
-          </Button>
-        </Container>
-      </Box>
-
+      <GlassHero />
       <Features />
-
+      <CustomDivider />
+      <HowItWorks />
+      <CustomDivider />
       <Pricing />
 
       {/* Footer */}

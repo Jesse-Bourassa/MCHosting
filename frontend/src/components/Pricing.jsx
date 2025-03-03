@@ -1,4 +1,5 @@
 // frontend/src/components/Pricing.jsx
+
 import React from 'react';
 import {
   Box,
@@ -8,7 +9,10 @@ import {
   Card,
   CardContent,
   CardActions,
-  Button
+  Button,
+  List,
+  ListItem,
+  ListItemText
 } from '@mui/material';
 
 export default function Pricing() {
@@ -21,10 +25,12 @@ export default function Pricing() {
       }}
     >
       <Container maxWidth="lg">
-        <Typography variant="h4" align="center" gutterBottom>
+        {/* Main Heading */}
+        <Typography variant="h3" align="center" gutterBottom>
           Pricing
         </Typography>
-        <Typography variant="subtitle1" align="center" paragraph>
+        {/* Subtitle */}
+        <Typography variant="h6" align="center" paragraph>
           Flexible plans to suit servers of any size.
         </Typography>
 
@@ -38,11 +44,12 @@ export default function Pricing() {
                 flexDirection: 'column',
                 textAlign: 'center',
                 alignItems: 'center',
+                boxShadow: 3,
                 p: 2,
                 transition: 'transform 0.3s, box-shadow 0.3s',
                 '&:hover': {
                   transform: 'translateY(-4px)',
-                  boxShadow: 3
+                  boxShadow: 7
                 }
               }}
             >
@@ -50,14 +57,28 @@ export default function Pricing() {
                 <Typography variant="h5" gutterBottom>
                   Basic
                 </Typography>
+                {/* Short Tagline */}
+                <Typography variant="body2" sx={{ fontStyle: 'italic', mb: 1 }}>
+                  Perfect for small servers
+                </Typography>
+
+                {/* Price */}
                 <Typography variant="h6" color="secondary" gutterBottom>
                   $5/mo
                 </Typography>
-                <Typography variant="body2" paragraph>
-                  - 1 GB RAM<br />
-                  - 1 CPU Core<br />
-                  - 10 GB SSD
-                </Typography>
+
+                {/* Feature List */}
+                <List dense sx={{ textAlign: 'left', display: 'inline-block' }}>
+                  <ListItem disablePadding>
+                    <ListItemText primary="1 GB RAM" />
+                  </ListItem>
+                  <ListItem disablePadding>
+                    <ListItemText primary="1 CPU Core" />
+                  </ListItem>
+                  <ListItem disablePadding>
+                    <ListItemText primary="10 GB SSD" />
+                  </ListItem>
+                </List>
               </CardContent>
               <CardActions sx={{ mt: 'auto', width: '100%' }}>
                 <Button variant="contained" color="secondary" fullWidth>
@@ -67,36 +88,73 @@ export default function Pricing() {
             </Card>
           </Grid>
 
-          {/* Standard Plan */}
+          {/* Standard Plan (Highlighted) */}
           <Grid item xs={12} sm={4}>
-            
             <Card
               sx={{
+                position: 'relative',
                 height: '100%',
                 display: 'flex',
                 flexDirection: 'column',
                 textAlign: 'center',
                 alignItems: 'center',
+                boxShadow: 3,
                 p: 2,
+                border: '2px solid',
+                borderColor: 'secondary.main', // highlight border
+                backgroundColor: 'rgba(255,255,255,0.05)', // subtle highlight
                 transition: 'transform 0.3s, box-shadow 0.3s',
                 '&:hover': {
                   transform: 'translateY(-4px)',
-                  boxShadow: 3
+                  boxShadow: 7
                 }
               }}
             >
+              {/* "Most Popular" Badge */}
+              <Box
+                sx={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  px: 2,
+                  py: 0.5,
+                  backgroundColor: 'secondary.main',
+                  color: '#fff',
+                  borderRadius: '0 0 8px 0'
+                }}
+              >
+                Most Popular
+              </Box>
+
               <CardContent>
                 <Typography variant="h5" gutterBottom>
                   Standard
                 </Typography>
+                {/* Short Tagline */}
+                <Typography variant="body2" sx={{ fontStyle: 'italic', mb: 1 }}>
+                  Great for mid-sized servers
+                </Typography>
+
+                {/* Price */}
                 <Typography variant="h6" color="secondary" gutterBottom>
                   $10/mo
                 </Typography>
-                <Typography variant="body2" paragraph>
-                  - 2 GB RAM<br />
-                  - 2 CPU Cores<br />
-                  - 25 GB SSD
-                </Typography>
+
+                {/* Feature List */}
+                <List dense sx={{ textAlign: 'left', display: 'inline-block' }}>
+                  <ListItem disablePadding>
+                    <ListItemText primary="2 GB RAM" />
+                  </ListItem>
+                  <ListItem disablePadding>
+                    <ListItemText primary="2 CPU Cores" />
+                  </ListItem>
+                  <ListItem disablePadding>
+                    <ListItemText primary="25 GB SSD" />
+                  </ListItem>
+                  <ListItem disablePadding>
+                  <ListItemText primary="Modded Support" />
+                  </ListItem>
+                </List>
               </CardContent>
               <CardActions sx={{ mt: 'auto', width: '100%' }}>
                 <Button variant="contained" color="secondary" fullWidth>
@@ -115,11 +173,12 @@ export default function Pricing() {
                 flexDirection: 'column',
                 textAlign: 'center',
                 alignItems: 'center',
+                boxShadow: 3,
                 p: 2,
                 transition: 'transform 0.3s, box-shadow 0.3s',
                 '&:hover': {
                   transform: 'translateY(-4px)',
-                  boxShadow: 3
+                  boxShadow: 7
                 }
               }}
             >
@@ -127,14 +186,31 @@ export default function Pricing() {
                 <Typography variant="h5" gutterBottom>
                   Premium
                 </Typography>
+                {/* Short Tagline */}
+                <Typography variant="body2" sx={{ fontStyle: 'italic', mb: 1 }}>
+                  Ideal for large communities
+                </Typography>
+
+                {/* Price */}
                 <Typography variant="h6" color="secondary" gutterBottom>
                   $20/mo
                 </Typography>
-                <Typography variant="body2" paragraph>
-                  - 4 GB RAM<br />
-                  - 4 CPU Cores<br />
-                  - 50 GB SSD
-                </Typography>
+
+                {/* Feature List */}
+                <List dense sx={{ textAlign: 'left', display: 'inline-block' }}>
+                  <ListItem disablePadding>
+                    <ListItemText primary="4 GB RAM" />
+                  </ListItem>
+                  <ListItem disablePadding>
+                    <ListItemText primary="4 CPU Cores" />
+                  </ListItem>
+                  <ListItem disablePadding>
+                    <ListItemText primary="50 GB SSD" />
+                  </ListItem>
+                  <ListItem disablePadding>
+                  <ListItemText primary="Modded Support" />
+                  </ListItem>
+                </List>
               </CardContent>
               <CardActions sx={{ mt: 'auto', width: '100%' }}>
                 <Button variant="contained" color="secondary" fullWidth>
