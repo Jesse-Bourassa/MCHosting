@@ -22,6 +22,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 
 
+
 export default function NavBar() {
   const [value, setValue] = React.useState(0);
   const [drawerOpen, setDrawerOpen] = React.useState(false);
@@ -65,12 +66,12 @@ export default function NavBar() {
         ))}
         <Divider sx={{ my: 1 }} />
       </List>
-      {/* Same style sign in / login buttons on mobile */}
+
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, mt: 2 }}>
-        <Button component={Link} to='/signin' variant="contained" color="secondary">
-          Sign In
+        <Button component={Link} to='/Auth/SignUp' variant="contained" color="secondary">
+          Sign up
         </Button>
-        <Button variant="contained" color="secondary">
+        <Button component={Link} to='/Auth/login' variant="contained" color="secondary">
           Login
         </Button>
       </Box>
@@ -174,10 +175,10 @@ export default function NavBar() {
                 gap: 1,
               }}
             >
-              <Button component={Link} to='/signin' variant="contained" color="secondary">
-                Sign In
+              <Button component={Link} to='/Auth/SignUp' variant="contained" color="secondary">
+              Sign up
               </Button>
-              <Button variant="contained" color="secondary">
+              <Button component={Link} to='/Auth/login' variant="contained" color="secondary">
                 Login
               </Button>
             </Box>

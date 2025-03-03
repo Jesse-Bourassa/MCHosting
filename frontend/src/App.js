@@ -5,7 +5,10 @@ import { ThemeProvider} from '@mui/material/styles';
 import Home from './pages/Home';
 import CssBaseline from '@mui/material/CssBaseline';
 import theme from './theme'; // Import your custom theme
-import SignInPage from './pages/SignIn'; // Import the sign-in page
+import SignUp from './pages/Auth/SignUp';
+import Login from './pages/Auth/Login';
+import ForgotPassword from './pages/Auth/ForgotPassword';
+
 
 
 function App() {
@@ -15,7 +18,9 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/signin" element={<SignInPage />} />
+          <Route path="/Auth/SignUp" element={<SignUp />} />
+          <Route path="/Auth/login" element={<Login />} />
+          <Route path="/Auth/ForgotPassword" element={<ForgotPassword />} />
         </Routes>
       </Router>
     </ThemeProvider>
