@@ -1,4 +1,6 @@
 // backend/index.js
+const cors = require('cors');
+
 require('dotenv').config();
 const express = require('express');
 const bcrypt = require('bcrypt');
@@ -10,7 +12,16 @@ const port = process.env.PORT || 3000;
 const JWT_SECRET = process.env.JWT_SECRET;
 
 // Enable JSON request body parsing
+
+app.use(cors({
+  origin: 'http://localhost:3000',
+  methods: 'GET,POST,PUT,DELETE',
+  allowedHeaders: 'Content-Type,Authorization'
+}));
+
 app.use(express.json());
+
+
 
 // -------------------------
 // 1. REGISTRATION ENDPOINT
