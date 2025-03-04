@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo, useContext  } from 'react';
 import {
   AppBar, Toolbar, Typography, Tabs, Tab, Box, Button, IconButton, Drawer,
   List, ListItem, ListItemText, useMediaQuery, Divider
@@ -6,31 +6,28 @@ import {
 import { useTheme } from '@mui/material/styles';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import AuthContext from "../context/AuthContext"; // ✅ Import Auth Context
+
 
 export default function NavBar() {
+  const { isAuthenticated, logout } = useContext(AuthContext); // ✅ Get auth state
   const location = useLocation();
   const navigate = useNavigate();
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
-  // Define routes for tabs
-  const tabRoutes = ["/", "/pricing", "/contact"];
+  // Use useMemo to avoid unnecessary re-renders
+  const tabRoutes = useMemo(() => ["/", "/pricing", "/contact"], []);
+
   const [tabIndex, setTabIndex] = useState(0);
 
-  // Update tab index when location changes with a small delay
+  // Ensure tab indicator updates correctly when navigating
   useEffect(() => {
     const index = tabRoutes.indexOf(location.pathname);
-    setTimeout(() => setTabIndex(index !== -1 ? index : false), 100); // Small delay ensures the indicator updates correctly
-  }, [location.pathname]);
+    setTabIndex(index !== -1 ? index : false);
+  }, [location.pathname, tabRoutes]); // ✅ Include tabRoutes in the dependency array
 
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  useEffect(() => {
-    // Check if user is authenticated by looking for a token
-    const token = localStorage.getItem('token');
-    setIsAuthenticated(!!token);
-  }, []);
 
   // Toggle drawer (mobile)
   const toggleDrawer = (open) => (event) => {
@@ -43,7 +40,7 @@ export default function NavBar() {
   // Handle Logout
   const handleLogout = () => {
     localStorage.removeItem('token'); // Remove token from storage
-    setIsAuthenticated(false); // Update state
+    logout(); // Update auth state
     navigate('/'); // Redirect to home
   };
 

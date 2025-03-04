@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { TextField, Button, Container, Typography, Box, Link, Divider } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
+
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
@@ -100,7 +102,7 @@ export default function SignUp() {
         <Box sx={{ mt: 2 }}>
           <Divider sx={{ mb: 2 }} />
           <Typography variant="body2">
-            Already have an account? <Link href="/Auth/login" variant="body2" sx={{ color: '#FDD835' }}>Sign In</Link>
+            Already have an account? <Link component={RouterLink} to="/Auth/login" variant="body2" sx={{ color: '#FDD835' }}>Sign In</Link>
           </Typography>
         </Box>
         <Button onClick={() => navigate('/')} sx={{ mt: 2, color: '#FDD835' }}>

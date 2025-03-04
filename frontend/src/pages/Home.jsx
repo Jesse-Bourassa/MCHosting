@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { Box, Container, Typography } from '@mui/material';
-import NavBar from '../components/NavBar';
 import Features from '../components/Features';
 import Pricing from '../components/Pricing';
 import GlassHero from '../components/Hero';
@@ -14,7 +13,6 @@ import CustomDivider from '../components/CustomDivider';
 export default function Home() {
   return (
     <>
-      <NavBar />
       <GlassHero />
       <Features />
       <CustomDivider />

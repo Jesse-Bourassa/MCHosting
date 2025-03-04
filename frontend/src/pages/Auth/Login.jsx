@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { TextField, Button, Container, Typography, Box, Checkbox, FormControlLabel, Link,Divider } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
+
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -34,7 +36,7 @@ export default function Login() {
 
       alert('Login successful!');
       localStorage.setItem('token', data.token);
-      navigate('/'); // Redirect to a protected route
+      navigate('/') // Redirect to a protected route
     } catch (err) {
       setError(err.message);
     }
@@ -103,9 +105,9 @@ export default function Login() {
         <Box sx={{ mt: 2 }}>
         <Divider sx={{  mb: 2 }} />
           <Typography variant="body2">
-            Don't have an account? <Link href="/Auth/signup" variant="body2" sx={{ color: '#FDD835' }}>Sign Up</Link>
+            Don't have an account? <Link component={RouterLink} to="/Auth/signup" variant="body2" sx={{ color: '#FDD835' }}>Sign Up</Link>
           </Typography>
-          <Link href="/Auth/ForgotPassword" variant="body2" sx={{ color: '#FDD835', display: 'block', mt: 1 }}>
+          <Link component={RouterLink} to="/Auth/ForgotPassword" variant="body2" sx={{ color: '#FDD835', display: 'block', mt: 1 }}>
             Forgot password?
           </Link>
         </Box>
