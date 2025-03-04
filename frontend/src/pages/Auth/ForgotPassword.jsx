@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { TextField, Button, Container, Typography, Box, Link, Divider } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState('');
@@ -69,7 +70,7 @@ export default function ForgotPassword() {
         <Box sx={{ mt: 2 }}>
           <Divider sx={{ backgroundColor: 'gray', mb: 2 }} />
           <Typography variant="body2" sx={{ color: 'gray' }}>
-            Remember your password? <Link href="/Auth/login" variant="body2" sx={{ color: '#FDD835' }}>Sign In</Link>
+            Remember your password? <Link component={RouterLink} to="/Auth/login" variant="body2" sx={{ color: '#FDD835' }}>Sign In</Link>
           </Typography>
         </Box>
       </Box>

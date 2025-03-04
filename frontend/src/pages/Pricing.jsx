@@ -1,6 +1,5 @@
 import React from 'react';
 import { Box, Typography, Grid, Card, CardContent, Button } from '@mui/material';
-import NavBar from '../components/NavBar';
 
 const pricingPlans = [
   {
@@ -27,7 +26,6 @@ const pricingPlans = [
 export default function Pricing() {
   return (
     <>
-    <NavBar/>
     <Box sx={{ minHeight: "100vh", bgcolor: "black", color: "white", py: 6, px: 3 }}>
       <Typography variant="h3" align="center" sx={{ fontWeight: "bold", mb: 4 }}>
         Pricing Plans

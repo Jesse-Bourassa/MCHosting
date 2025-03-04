@@ -9,14 +9,19 @@ import SignUp from './pages/Auth/SignUp';
 import Login from './pages/Auth/Login';
 import ForgotPassword from './pages/Auth/ForgotPassword';
 import Pricing from './pages/Pricing';
+import NavBar from "../src/components/NavBar";
+import { AuthProvider } from './context/AuthContext';
+
 
 
 
 function App() {
   return (
+    <AuthProvider>
     <ThemeProvider theme={theme}>
        <CssBaseline />
       <Router>
+        <NavBar/>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/Auth/SignUp" element={<SignUp />} />
@@ -26,6 +31,7 @@ function App() {
         </Routes>
       </Router>
     </ThemeProvider>
+    </AuthProvider>
   );
 }
 
