@@ -8,6 +8,7 @@ import theme from './theme'; // Import your custom theme
 import SignUp from './pages/Auth/SignUp';
 import Login from './pages/Auth/Login';
 import ForgotPassword from './pages/Auth/ForgotPassword';
+import Pricing from './pages/Pricing';
 
 
 
@@ -21,6 +22,7 @@ function App() {
           <Route path="/Auth/SignUp" element={<SignUp />} />
           <Route path="/Auth/login" element={<Login />} />
           <Route path="/Auth/ForgotPassword" element={<ForgotPassword />} />
+          <Route path="/pricing" element={<Pricing />} />
         </Routes>
       </Router>
     </ThemeProvider>
