@@ -1,63 +1,60 @@
-// frontend/src/components/NavBar.jsx
-
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Tabs,
-  Tab,
-  Box,
-  Button,
-  IconButton,
-  Drawer,
-  List,
-  ListItem,
-  ListItemText,
-  useMediaQuery,
-  Divider
+  AppBar, Toolbar, Typography, Tabs, Tab, Box, Button, IconButton, Drawer,
+  List, ListItem, ListItemText, useMediaQuery, Divider
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
-
-
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 export default function NavBar() {
-  const [value, setValue] = React.useState(0);
-  const [drawerOpen, setDrawerOpen] = React.useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
-  // Handle tab changes (desktop)
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  // Define routes for tabs
+  const tabRoutes = ["/", "/pricing", "/contact"];
+  const [tabIndex, setTabIndex] = useState(0);
+
+  // Update tab index when location changes with a small delay
+  useEffect(() => {
+    const index = tabRoutes.indexOf(location.pathname);
+    setTimeout(() => setTabIndex(index !== -1 ? index : false), 100); // Small delay ensures the indicator updates correctly
+  }, [location.pathname]);
+
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    // Check if user is authenticated by looking for a token
+    const token = localStorage.getItem('token');
+    setIsAuthenticated(!!token);
+  }, []);
 
   // Toggle drawer (mobile)
   const toggleDrawer = (open) => (event) => {
-    if (
-      event.type === 'keydown' &&
-      (event.key === 'Tab' || event.key === 'Shift')
-    ) {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
     setDrawerOpen(open);
   };
 
-  // Detect small screens
-  const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+  // Handle Logout
+  const handleLogout = () => {
+    localStorage.removeItem('token'); // Remove token from storage
+    setIsAuthenticated(false); // Update state
+    navigate('/'); // Redirect to home
+  };
 
-  // Nav links
-  const navLinks = ['Home', 'Features', 'Pricing'];
+  // Define navigation links dynamically based on authentication state
+  const navLinks = isAuthenticated
+    ? ['Home', 'Dashboard', 'My Servers', 'Billing']
+    : ['Home', 'Pricing', 'Contact'];
 
-  // Drawer content
+  // Drawer content for mobile view
   const drawerContent = (
-    <Box
-      sx={{ width: 220, p: 2 }}
-      role="presentation"
-      onClick={toggleDrawer(false)}
-      onKeyDown={toggleDrawer(false)}
-    >
+    <Box sx={{ width: 220, p: 2 }} role="presentation" onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)}>
       <List>
         {navLinks.map((text) => (
           <ListItem button key={text}>
@@ -68,119 +65,80 @@ export default function NavBar() {
       </List>
 
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, mt: 2 }}>
-        <Button component={Link} to='/Auth/SignUp' variant="contained" color="secondary">
-          Sign up
-        </Button>
-        <Button component={Link} to='/Auth/login' variant="contained" color="secondary">
-          Login
-        </Button>
+        {!isAuthenticated ? (
+          <>
+            <Button component={Link} to='/Auth/SignUp' variant="contained" color="secondary">
+              Sign up
+            </Button>
+            <Button component={Link} to='/Auth/Login' variant="contained" color="secondary">
+              Login
+            </Button>
+          </>
+        ) : (
+          <Button onClick={handleLogout} variant="contained" color="secondary">
+            Logout
+          </Button>
+        )}
       </Box>
     </Box>
   );
 
   return (
     <AppBar position="static">
-      <Toolbar
-        disableGutters
-        sx={{
-          minHeight: 64,
-          position: 'relative',
-        }}
-      >
+      <Toolbar disableGutters sx={{ minHeight: 64, position: 'relative' }}>
         {isSmallScreen ? (
-          /* MOBILE LAYOUT */
           <>
-            {/* Brand Centered */}
-            <Typography
-              variant="h5"
-              sx={{
-                position: 'absolute',
-                left: '50%',
-                top: '50%',
-                transform: 'translate(-50%, -50%)',
-                color: 'secondary.main',
-                fontWeight: 'bold',
-              }}
-            >
+            <Typography variant="h5" sx={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', color: 'secondary.main', fontWeight: 'bold' }}>
               MCHostings
             </Typography>
 
-            {/* Hamburger on the right */}
-            <IconButton
-              color="inherit"
-              onClick={toggleDrawer(true)}
-              sx={{
-                position: 'absolute',
-                right: '1rem',
-                top: '50%',
-                transform: 'translateY(-50%)',
-              }}
-            >
+            <IconButton color="inherit" onClick={toggleDrawer(true)} sx={{ position: 'absolute', right: '1rem', top: '50%', transform: 'translateY(-50%)' }}>
               <MenuIcon />
             </IconButton>
 
-            {/* Drawer on the right */}
-            <Drawer
-              anchor="right"
-              open={drawerOpen}
-              onClose={toggleDrawer(false)}
-            >
+            <Drawer anchor="right" open={drawerOpen} onClose={toggleDrawer(false)}>
               {drawerContent}
             </Drawer>
           </>
         ) : (
-          /* DESKTOP LAYOUT */
           <>
-            {/* Brand pinned left */}
-            <Typography
-              variant="h5"
-              sx={{
-                position: 'absolute',
-                left: '1rem',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                color: 'secondary.main',
-                fontWeight: 'bold',
-              }}
-            >
+            <Typography variant="h5" sx={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'secondary.main', fontWeight: 'bold' }}>
               MCHostings
             </Typography>
 
-            {/* Tabs center */}
+            {/* Tabs with dynamic value */}
             <Tabs
-              value={value}
-              onChange={handleChange}
+              value={tabIndex}
               textColor="inherit"
               indicatorColor="secondary"
               sx={{
-                position: 'absolute',
-                left: '50%',
-                top: '50%',
-                transform: 'translate(-50%, -50%)',
+                position: "absolute",
+                left: "50%",
+                top: "50%",
+                transform: "translate(-50%, -50%)",
+                transition: "all 0.3s ease-in-out", // Smooth transition
               }}
             >
-              {navLinks.map((label) => (
-                <Tab key={label} label={label} />
-              ))}
+              <Tab label="Home" component={Link} to="/" />
+              <Tab label="Pricing" component={Link} to="/pricing" />
+              <Tab label="Contact" component={Link} to="/contact" />
             </Tabs>
 
-            {/* Sign In & Login pinned right */}
-            <Box
-              sx={{
-                position: 'absolute',
-                right: '1rem',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                display: 'flex',
-                gap: 1,
-              }}
-            >
-              <Button component={Link} to='/Auth/SignUp' variant="contained" color="secondary">
-              Sign up
-              </Button>
-              <Button component={Link} to='/Auth/login' variant="contained" color="secondary">
-                Login
-              </Button>
+            <Box sx={{ position: 'absolute', right: '1rem', top: '50%', transform: 'translateY(-50%)', display: 'flex', gap: 1 }}>
+              {!isAuthenticated ? (
+                <>
+                  <Button component={Link} to='/Auth/SignUp' variant="contained" color="secondary">
+                    Sign up
+                  </Button>
+                  <Button component={Link} to='/Auth/Login' variant="contained" color="secondary">
+                    Login
+                  </Button>
+                </>
+              ) : (
+                <Button onClick={handleLogout} variant="contained" color="secondary">
+                  Logout
+                </Button>
+              )}
             </Box>
           </>
         )}
