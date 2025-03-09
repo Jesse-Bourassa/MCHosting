@@ -1,25 +1,24 @@
-import React, { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // Check if user is logged in when app starts
+  // ✅ Track changes in localStorage
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsAuthenticated(!!token);
-  }, []);
+    const token = localStorage.getItem('token');
+    setIsAuthenticated(!!token); // Update auth state when token changes
+    console.log("Auth Context Updated - Authenticated:", !!token);
+  }, []); // ✅ Run only on mount
 
-  // Function to login user
   const login = (token) => {
-    localStorage.setItem("token", token);
-    setIsAuthenticated(true);
+    localStorage.setItem('token', token);
+    setIsAuthenticated(true); // ✅ React now detects state change
   };
 
-  // Function to logout user
   const logout = () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem('token');
     setIsAuthenticated(false);
   };
 

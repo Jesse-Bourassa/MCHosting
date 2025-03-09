@@ -16,16 +16,27 @@ export default function NavBar() {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
-  // Use useMemo to avoid unnecessary re-renders
-  const tabRoutes = useMemo(() => ["/", "/pricing", "/contact"], []);
-
   const [tabIndex, setTabIndex] = useState(0);
 
-  // Ensure tab indicator updates correctly when navigating
   useEffect(() => {
-    const index = tabRoutes.indexOf(location.pathname);
-    setTabIndex(index !== -1 ? index : false);
-  }, [location.pathname, tabRoutes]); // ✅ Include tabRoutes in the dependency array
+    console.log("NavBar Rendered - Authenticated:", isAuthenticated);
+  }, [isAuthenticated]); // ✅ Logs every time auth changes
+  
+  const tabRoutes = useMemo(() => 
+    isAuthenticated
+      ? ["/", "/pricing", "/dashboard", "/myservers", "/billing"]
+      : ["/", "/pricing", "/contact"]
+  , [isAuthenticated]);
+
+  useEffect(() => {
+  const foundIndex = tabRoutes.findIndex(route => route === location.pathname);
+
+  if (foundIndex !== -1) {
+    setTabIndex(foundIndex);
+  } else {
+    setTabIndex(0); // Default to Home
+  }
+}, [location.pathname, tabRoutes]);
 
   const [drawerOpen, setDrawerOpen] = useState(false);
 
@@ -45,21 +56,53 @@ export default function NavBar() {
   };
 
   // Define navigation links dynamically based on authentication state
-  const navLinks = isAuthenticated
-    ? ['Home', 'Dashboard', 'My Servers', 'Billing']
-    : ['Home', 'Pricing', 'Contact'];
+  
+  
+  const navLinks = useMemo(() => 
+    isAuthenticated
+      ? [
+          { label: "Home", path: "/" },
+          { label: "Pricing", path: "/pricing" },
+          { label: "Dashboard", path: "/dashboard" },
+          { label: "My Servers", path: "/myservers" },
+          { label: "Billing", path: "/billing" }
+        ]
+      : [
+          { label: "Home", path: "/" },
+          { label: "Pricing", path: "/pricing" },
+          { label: "Contact", path: "/contact" }
+        ]
+  , [isAuthenticated]);
 
   // Drawer content for mobile view
   const drawerContent = (
     <Box sx={{ width: 220, p: 2 }} role="presentation" onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)}>
       <List>
-        {navLinks.map((text) => (
-          <ListItem button key={text}>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-        <Divider sx={{ my: 1 }} />
-      </List>
+  {navLinks.map((link) => (
+    <ListItem 
+      button 
+      key={link.path} 
+      component={Link} 
+      to={link.path}
+      sx={{
+        color: "white", // ✅ Match desktop color
+        fontWeight: "bold", // ✅ Match desktop weight
+        textTransform: "uppercase", // ✅ Match desktop text style
+        "&:hover": { color: "#FDD835" }, // ✅ Match hover effect
+        padding: "12px 16px", // ✅ Add padding for better spacing
+        display: "flex",
+        justifyContent: "center" // ✅ Center align text
+      }}
+    >
+      <ListItemText 
+        primary={link.label} 
+        sx={{ textAlign: "center" }} // ✅ Center text inside the item
+      />
+    </ListItem>
+  ))}
+          <Divider sx={{ my: 1 }} />
+
+</List>
 
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, mt: 2 }}>
         {!isAuthenticated ? (
@@ -105,21 +148,21 @@ export default function NavBar() {
 
             {/* Tabs with dynamic value */}
             <Tabs
-              value={tabIndex}
-              textColor="inherit"
-              indicatorColor="secondary"
-              sx={{
-                position: "absolute",
-                left: "50%",
-                top: "50%",
-                transform: "translate(-50%, -50%)",
-                transition: "all 0.3s ease-in-out", // Smooth transition
-              }}
-            >
-              <Tab label="Home" component={Link} to="/" />
-              <Tab label="Pricing" component={Link} to="/pricing" />
-              <Tab label="Contact" component={Link} to="/contact" />
-            </Tabs>
+  value={tabIndex >= 0 ? tabIndex : 0} // Prevents invalid values
+  textColor="inherit"
+  indicatorColor="secondary"
+  sx={{
+    position: "absolute",
+    left: "50%",
+    top: "50%",
+    transform: "translate(-50%, -50%)",
+    transition: "all 0.3s ease-in-out",
+  }}
+>
+  {navLinks.map((link, index) => (
+    <Tab key={index} label={link.label} component={Link} to={link.path} />
+  ))}
+</Tabs>
 
             <Box sx={{ position: 'absolute', right: '1rem', top: '50%', transform: 'translateY(-50%)', display: 'flex', gap: 1 }}>
               {!isAuthenticated ? (
